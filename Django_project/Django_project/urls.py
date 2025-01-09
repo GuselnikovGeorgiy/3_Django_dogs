@@ -17,7 +17,16 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
+from rest_framework.routers import SimpleRouter
+
+from dogs.views import DogViewSet
+
+router = SimpleRouter()
+
+router.register("dogs", DogViewSet)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
 ]
+
+urlpatterns += router.urls
