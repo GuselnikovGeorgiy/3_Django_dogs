@@ -15,7 +15,7 @@ class Breed(models.Model):
         (4, 4),
         (5, 5),
     ]
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     size = models.CharField(max_length=10, choices=SIZE_CHOICES)
     friendliness = models.IntegerField(choices=INT_CHOICES)
     trainability = models.IntegerField(choices=INT_CHOICES)
