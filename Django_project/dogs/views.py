@@ -2,7 +2,7 @@ from django.db.models import Avg, Count, Subquery, OuterRef
 from rest_framework.viewsets import ModelViewSet
 
 from dogs.models import Dog, Breed
-from dogs.serializers import DogListSerializer, DogDetailSerializer, BreedSerializer
+from dogs.serializers import DogListSerializer, DogDetailSerializer, BreedSerializer, DogSerializer
 
 
 class DogViewSet(ModelViewSet):
@@ -29,11 +29,11 @@ class DogViewSet(ModelViewSet):
             return DogListSerializer
         elif self.action == 'retrieve':
             return DogDetailSerializer
+        elif self.action in ["create", "update", "partial_update"]:
+            return DogSerializer
         return super().get_serializer_class()
 
 
 class BreedViewSet(ModelViewSet):
-    queryset = Breed.objects.all().annotate(
-        dogs_count=Count('dogs')
-    )
+    queryset = Breed.objects.all().annotate(dogs_count=Count('dogs'))
     serializer_class = BreedSerializer
