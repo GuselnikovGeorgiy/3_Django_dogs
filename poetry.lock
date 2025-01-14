@@ -35,6 +35,50 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+name = "django-debug-toolbar"
+version = "4.4.6"
+description = "A configurable set of panels that display various debug information about the current request/response."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "django_debug_toolbar-4.4.6-py3-none-any.whl", hash = "sha256:3beb671c9ec44ffb817fad2780667f172bd1c067dbcabad6268ce39a81335f45"},
+    {file = "django_debug_toolbar-4.4.6.tar.gz", hash = "sha256:36e421cb908c2f0675e07f9f41e3d1d8618dc386392ec82d23bcfcd5d29c7044"},
+]
+
+[package.dependencies]
+django = ">=4.2.9"
+sqlparse = ">=0.2"
+
+[[package]]
+name = "django-debug-toolbar-force"
+version = "0.2"
+description = "Force debugging of partial- or non-HTML views in django-debug-toolbar."
+optional = false
+python-versions = "*"
+files = [
+    {file = "django-debug-toolbar-force-0.2.tar.gz", hash = "sha256:2ab28dca4a5cd0261dfe555d709935f2dabbbb09b4be5ac0ce82103a8da0a735"},
+    {file = "django_debug_toolbar_force-0.2-py2.py3-none-any.whl", hash = "sha256:3f580982051079dc5e85e13590d9f13d70bf012be693a81b167183cf9a3f6eec"},
+]
+
+[package.dependencies]
+django-nine = ">=0.2.3"
+
+[[package]]
+name = "django-nine"
+version = "0.2.7"
+description = "Version checking library."
+optional = false
+python-versions = "*"
+files = [
+    {file = "django-nine-0.2.7.tar.gz", hash = "sha256:304e0f83cea5a35359375fc919d00f9917b655c1d388244cbfc7363f59489177"},
+    {file = "django_nine-0.2.7-py2.py3-none-any.whl", hash = "sha256:4d93208ca5bb4a63bf65cf098a82ee469127b04ebde698d72fe12d258b73c291"},
+]
+
+[package.dependencies]
+Django = "*"
+packaging = "*"
+
+[[package]]
 name = "djangorestframework"
 version = "3.15.2"
 description = "Web APIs for Django, made easy."
@@ -47,6 +91,17 @@ files = [
 
 [package.dependencies]
 django = ">=4.2"
+
+[[package]]
+name = "packaging"
+version = "24.2"
+description = "Core utilities for Python packages"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "packaging-24.2-py3-none-any.whl", hash = "sha256:09abb1bccd265c01f4a3aa3f7a7db064b36514d2cba19a2f694fe6150451a759"},
+    {file = "packaging-24.2.tar.gz", hash = "sha256:c228a6dc5e932d346bc5739379109d49e8853dd8223571c7c5b55260edc0b97f"},
+]
 
 [[package]]
 name = "psycopg2"
@@ -95,4 +150,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "df029981751b9f9bbbfdc1ee5609fa289805bbb3f30463f71c1901c2245c1d3f"
+content-hash = "bd1d48cff139ce314c5c83e4e0a2f76cd9f02a0dea6ee644db61947bbdfe9e3f"
