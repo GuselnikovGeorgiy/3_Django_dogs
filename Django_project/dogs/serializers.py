@@ -11,11 +11,13 @@ class DogSerializer(ModelSerializer):
 
 
 class DogListSerializer(DogSerializer):
-    avg_breed_age = serializers.DecimalField(max_digits=3, decimal_places=2, read_only=True) # all dogs
+    avg_breed_age = serializers.DecimalField(
+        max_digits=3, decimal_places=2, read_only=True
+    )
 
 
 class DogDetailSerializer(DogSerializer):
-    same_breed_count = serializers.IntegerField(read_only=True)  # one dog
+    same_breed_count = serializers.IntegerField(read_only=True)
 
 
 class BreedSerializer(ModelSerializer):

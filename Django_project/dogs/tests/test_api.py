@@ -10,38 +10,71 @@ from dogs.serializers import DogListSerializer, DogDetailSerializer, BreedSerial
 
 class DogsApiTestCase(APITestCase):
     def setUp(self):
-        self.breed_1 = Breed.objects.create(name="breed1", size="Small", friendliness=1, trainability=2,
-                                            shedding_amount=3, exercise_needs=4)
-        self.breed_2 = Breed.objects.create(name="breed2", size="Medium", friendliness=5, trainability=4,
-                                            shedding_amount=3, exercise_needs=2)
-        self.dog_1 = Dog.objects.create(name="dog1", age=1, breed=self.breed_1, gender="Male", color="white",
-                                        favorite_food="bone", favorite_toy="ball")
-        self.dog_2 = Dog.objects.create(name="dog2", age=2, breed=self.breed_2, gender="Female", color="black",
-                                        favorite_food="bone", favorite_toy="ball")
-        self.dog_3 = Dog.objects.create(name="dog3", age=4, breed=self.breed_2, gender="Female", color="black",
-                                        favorite_food="bone", favorite_toy="ball")
+        self.breed_1 = Breed.objects.create(
+            name="breed1",
+            size="Small",
+            friendliness=1,
+            trainability=2,
+            shedding_amount=3,
+            exercise_needs=4,
+        )
+        self.breed_2 = Breed.objects.create(
+            name="breed2",
+            size="Medium",
+            friendliness=5,
+            trainability=4,
+            shedding_amount=3,
+            exercise_needs=2,
+        )
+        self.dog_1 = Dog.objects.create(
+            name="dog1",
+            age=1,
+            breed=self.breed_1,
+            gender="Male",
+            color="white",
+            favorite_food="bone",
+            favorite_toy="ball",
+        )
+        self.dog_2 = Dog.objects.create(
+            name="dog2",
+            age=2,
+            breed=self.breed_2,
+            gender="Female",
+            color="black",
+            favorite_food="bone",
+            favorite_toy="ball",
+        )
+        self.dog_3 = Dog.objects.create(
+            name="dog3",
+            age=4,
+            breed=self.breed_2,
+            gender="Female",
+            color="black",
+            favorite_food="bone",
+            favorite_toy="ball",
+        )
 
     def test_get_list_dogs(self):
         url = reverse("dog-list")
         response = self.client.get(url)
         dogs = Dog.objects.all().annotate(
             avg_breed_age=Subquery(
-                Dog.objects.filter(breed=OuterRef('breed'))
-                .values('breed')
-                .annotate(avg_age=Avg('age'))
-                .values('avg_age')
+                Dog.objects.filter(breed=OuterRef("breed"))
+                .values("breed")
+                .annotate(avg_age=Avg("age"))
+                .values("avg_age")
             )
         )
         serializer_data = DogListSerializer(dogs, many=True).data
         self.assertEqual(status.HTTP_200_OK, response.status_code, response.data)
         self.assertEqual(serializer_data, response.data)
-        self.assertEqual(serializer_data[2]['avg_breed_age'], "3.00")
+        self.assertEqual(serializer_data[2]["avg_breed_age"], "3.00")
 
     def test_get_detail_dog(self):
         url = reverse("dog-detail", args=[self.dog_1.id])
         response = self.client.get(url)
         dog = Dog.objects.annotate(
-            same_breed_count=Count('breed__dogs'),
+            same_breed_count=Count("breed__dogs"),
         ).get(id=self.dog_1.id)
         serializer_data = DogDetailSerializer(dog, many=False).data
         self.assertEqual(status.HTTP_200_OK, response.status_code, response.data)
@@ -57,7 +90,7 @@ class DogsApiTestCase(APITestCase):
             "gender": "Male",
             "color": "white",
             "favorite_food": "bone",
-            "favorite_toy": "ball"
+            "favorite_toy": "ball",
         }
         response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -72,7 +105,7 @@ class DogsApiTestCase(APITestCase):
             "gender": "Female",
             "color": "Red",
             "favorite_food": "bone",
-            "favorite_toy": "ball"
+            "favorite_toy": "ball",
         }
         response = self.client.put(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -93,26 +126,59 @@ class DogsApiTestCase(APITestCase):
 
 class BreedApiTestCase(APITestCase):
     def setUp(self):
-        self.breed_1 = Breed.objects.create(name="breed1", size="Small", friendliness=1, trainability=2,
-                                            shedding_amount=3, exercise_needs=4)
-        self.breed_2 = Breed.objects.create(name="breed2", size="Medium", friendliness=5, trainability=4,
-                                            shedding_amount=3, exercise_needs=2)
-        self.dog_1 = Dog.objects.create(name="dog1", age=1, breed=self.breed_1, gender="Male", color="white",
-                                        favorite_food="bone", favorite_toy="ball")
-        self.dog_2 = Dog.objects.create(name="dog2", age=2, breed=self.breed_2, gender="Female", color="black",
-                                        favorite_food="bone", favorite_toy="ball")
-        self.dog_3 = Dog.objects.create(name="dog3", age=4, breed=self.breed_2, gender="Female", color="black",
-                                        favorite_food="bone", favorite_toy="ball")
+        self.breed_1 = Breed.objects.create(
+            name="breed1",
+            size="Small",
+            friendliness=1,
+            trainability=2,
+            shedding_amount=3,
+            exercise_needs=4,
+        )
+        self.breed_2 = Breed.objects.create(
+            name="breed2",
+            size="Medium",
+            friendliness=5,
+            trainability=4,
+            shedding_amount=3,
+            exercise_needs=2,
+        )
+        self.dog_1 = Dog.objects.create(
+            name="dog1",
+            age=1,
+            breed=self.breed_1,
+            gender="Male",
+            color="white",
+            favorite_food="bone",
+            favorite_toy="ball",
+        )
+        self.dog_2 = Dog.objects.create(
+            name="dog2",
+            age=2,
+            breed=self.breed_2,
+            gender="Female",
+            color="black",
+            favorite_food="bone",
+            favorite_toy="ball",
+        )
+        self.dog_3 = Dog.objects.create(
+            name="dog3",
+            age=4,
+            breed=self.breed_2,
+            gender="Female",
+            color="black",
+            favorite_food="bone",
+            favorite_toy="ball",
+        )
 
     def test_get_list_breeds(self):
         url = reverse("breed-list")
         response = self.client.get(url)
-        breeds = Breed.objects.all().annotate(dogs_count=Count('dogs'))
+        breeds = Breed.objects.all().annotate(dogs_count=Count("dogs"))
         serializer_data = BreedSerializer(breeds, many=True).data
         self.assertEqual(status.HTTP_200_OK, response.status_code, response.data)
         self.assertEqual(serializer_data, response.data)
-        self.assertEqual(serializer_data[0]['dogs_count'], 1)
-        self.assertEqual(serializer_data[1]['dogs_count'], 2)
+        self.assertEqual(serializer_data[0]["dogs_count"], 1)
+        self.assertEqual(serializer_data[1]["dogs_count"], 2)
 
     def test_create_breed(self):
         self.assertEqual(Breed.objects.all().count(), 2)
@@ -123,7 +189,7 @@ class BreedApiTestCase(APITestCase):
             "friendliness": 1,
             "trainability": 2,
             "shedding_amount": 3,
-            "exercise_needs": 4
+            "exercise_needs": 4,
         }
         response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -137,7 +203,7 @@ class BreedApiTestCase(APITestCase):
             "friendliness": 1,
             "trainability": 2,
             "shedding_amount": 3,
-            "exercise_needs": 4
+            "exercise_needs": 4,
         }
         response = self.client.put(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)

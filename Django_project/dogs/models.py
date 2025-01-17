@@ -3,10 +3,10 @@ from django.db import models
 
 class Breed(models.Model):
     SIZE_CHOICES = [
-        ('Tiny', 'Tiny'),
-        ('Small', 'Small'),
-        ('Medium', 'Medium'),
-        ('Large', 'Large'),
+        ("Tiny", "Tiny"),
+        ("Small", "Small"),
+        ("Medium", "Medium"),
+        ("Large", "Large"),
     ]
     INT_CHOICES = [
         (1, 1),
@@ -28,13 +28,15 @@ class Breed(models.Model):
 
 class Dog(models.Model):
     GENDER_CHOICES = [
-        ('Male', 'Male'),
-        ('Female', 'Female'),
+        ("Male", "Male"),
+        ("Female", "Female"),
     ]
 
     name = models.CharField(max_length=100)
     age = models.PositiveSmallIntegerField()
-    breed = models.ForeignKey(Breed, on_delete=models.SET_NULL, related_name="dogs", default=None, null=True)
+    breed = models.ForeignKey(
+        Breed, on_delete=models.SET_NULL, related_name="dogs", default=None, null=True
+    )
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES)
     color = models.CharField(max_length=50)
     favorite_food = models.CharField(max_length=100)
